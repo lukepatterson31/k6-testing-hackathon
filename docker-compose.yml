@@ -5,7 +5,9 @@ services:
       - datadog-agent
     environment:
       - K6_STATSD_ENABLE_TAGS=true
-      - K6_STATSD_ADDR=172.27.0.2:8125
+      - K6_STATSD_ADDR=172.17.0.1:8125
+    networks:
+      - mynetwork  
 
   datadog-agent:
     image: datadog/agent:latest
@@ -19,3 +21,9 @@ services:
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=1
     ports:
       - "8125:8125/udp"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    name: mynetwork        
